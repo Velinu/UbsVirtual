@@ -1,25 +1,15 @@
 package com.ubsvirtual.UbsVirtual.controllers;
 
-import com.ubsvirtual.UbsVirtual.models.pessoas.Especializacao;
 import com.ubsvirtual.UbsVirtual.models.pessoas.Medico;
-import com.ubsvirtual.UbsVirtual.responsestatusexception.MedicoNotFound;
 import com.ubsvirtual.UbsVirtual.services.MedicoService;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/medico")
@@ -28,14 +18,14 @@ public class MedicoController {
     MedicoService medicoService;
 
     @GetMapping("/")
-    public List<Medico> getAll(){
-        return medicoService.getAll();
+    public ResponseEntity<List<Medico>> getAll(){
+        try {
+            return medicoService.getAll();
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/teste")
-    ResponseEntity<String> teste(){
-        return new ResponseEntity<>("Hello worled", HttpStatus.BAD_GATEWAY);
-    }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
     public Page<Medico> getAllPagination(@PathVariable Integer offset, @PathVariable Integer pageSize){
@@ -46,34 +36,72 @@ public class MedicoController {
     public ResponseEntity<Medico> getById(@PathVariable Integer i) throws Exception {
         try {
             return ResponseEntity.ok(medicoService.getById(i));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @PostMapping("/postone/")
+    public ResponseEntity<Medico> postMedico(@RequestBody Medico medico) {
+        try {
+            return medicoService.postOne(medico);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/setnome/{i}")
+    public ResponseEntity<Medico> setNome(@PathVariable Integer i, @RequestBody String novoNome) {
+        try {
+            return medicoService.setName(i, novoNome);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
     }
 
-    @GetMapping("/delete/{i}")
-    public String delete(@PathVariable Integer i){
-        return medicoService.delete(i);
+    @PutMapping("/setsexo/{i}")
+    public ResponseEntity<Medico> setSexo(@PathVariable Integer i, @RequestBody String novoSexo){
+        try {
+            return medicoService.setSexo(i, novoSexo);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/active/{i}")
-    public String activate(@PathVariable Integer i){
-        return medicoService.activate(i);
+    @PutMapping("/setsenha/{i}")
+    public ResponseEntity<Medico> setSenha(@PathVariable Integer i, @RequestBody String senha){
+        try {
+            return medicoService.setSenha(i, senha);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/truedelete/{i}")
-    public String trueDelete(@PathVariable Integer i){
-        return medicoService.trueDelete(i);
+    @PutMapping("/active/{i}")
+    public ResponseEntity<Medico> activate(@PathVariable Integer i){
+        try {
+            return new ResponseEntity(medicoService.activate(i), HttpStatus.OK);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/setnome/{i}/{n}")
-    public String setName(@PathVariable Integer i, @PathVariable String n){
-        return medicoService.setName(i,n);
+    @DeleteMapping("/delete/{i}")
+    public ResponseEntity<Medico> delete(@PathVariable Integer i){
+        try {
+            return new ResponseEntity(medicoService.delete(i), HttpStatus.OK);
+        }catch(ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/setsexo/{i}/{s}")
-    public String setSexo(@PathVariable Integer i, @PathVariable String s){
-        return medicoService.setSexo(i,s);
+    @DeleteMapping("/truedelete/{i}")
+    public ResponseEntity<Medico> trueDelete(@PathVariable Integer i){
+        try {
+            return new ResponseEntity(medicoService.trueDelete(i), HttpStatus.OK);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
 }

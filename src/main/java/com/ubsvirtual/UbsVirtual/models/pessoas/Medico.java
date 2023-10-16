@@ -6,23 +6,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-
-
 @Document(collection = "Medicos")
 public class Medico extends Pessoa{
     private String crm;
     private Especializacao especializacao;
 
 
-    public Medico(Integer id, String crm, Especializacao especializacao, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo) throws CpfException, CpfException {
-        super(id, cpf, nome, nascimento, sexo, tipo_sanguineo);
+    public Medico(Integer id, String crm, Especializacao especializacao, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo, String senha) throws CpfException, CpfException {
+        super(id, cpf, nome, nascimento, sexo, tipo_sanguineo, senha);
         this.crm = crm;
         this.especializacao = especializacao;
     }
 
     public String getCrm() {
         return crm;
-
     }
 
     public Especializacao getEspecializacao() {

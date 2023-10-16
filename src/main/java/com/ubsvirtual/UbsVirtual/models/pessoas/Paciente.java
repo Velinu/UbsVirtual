@@ -9,8 +9,8 @@ import java.time.LocalDate;
 public class Paciente extends Pessoa{
     private LocalDate ultima_consulta;
 
-    public Paciente(Integer id, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo) throws CpfException, CpfException {
-        super(id, cpf, nome, nascimento, sexo, tipo_sanguineo);
+    public Paciente(Integer id, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo, String senha) throws CpfException, CpfException {
+        super(id, cpf, nome, nascimento, sexo, tipo_sanguineo, senha);
     }
 
     public LocalDate getUltima_consulta() {

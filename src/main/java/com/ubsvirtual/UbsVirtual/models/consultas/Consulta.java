@@ -33,6 +33,7 @@ public class Consulta implements GerenciadorConsulta {
         this.horaInicio = horaInicio;
         this.horaFinal = horaInicio.plusMinutes(30);
         this.statusConsulta = StatusConsulta.PENDENTE;
+        this.anotacoes = "";
     }
 
     public Integer getId() {
@@ -83,4 +84,5 @@ public class Consulta implements GerenciadorConsulta {
         this.statusConsulta = StatusConsulta.CONCLUIDA;
     }
 
+    public void setAnotattion(String anottation) {this.anotacoes = anottation;}
 }

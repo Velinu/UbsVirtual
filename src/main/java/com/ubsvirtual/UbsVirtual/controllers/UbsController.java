@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -23,8 +20,13 @@ public class UbsController {
     UbsService ubsService;
 
     @GetMapping("/")
-    public List<Ubs> getAll(){
-        return ubsService.getAll();
+    public ResponseEntity<List<Ubs>> getAll(){
+        try {
+            return ubsService.getAll();
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
     @GetMapping("/{offset}/{pageSize}")
@@ -41,29 +43,59 @@ public class UbsController {
         }
     }
 
-    @GetMapping("/delete/{i}")
-    public String delete(@PathVariable Integer i){
-        return ubsService.delete(i);
+    @DeleteMapping("/delete/{i}")
+    public ResponseEntity<Ubs> delete(@PathVariable Integer i){
+
+        try{
+            return ubsService.delete(i);
+        }catch(ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/active/{i}")
-    public String activate(@PathVariable Integer i){
-        return ubsService.activate(i);
+    @DeleteMapping("/truedelete/{i}")
+    public ResponseEntity<Ubs> trueDelete(@PathVariable Integer i){
+        try {
+            return ubsService.trueDelete(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/truedelete/{i}")
-    public String trueDelete(@PathVariable Integer i){
-        return ubsService.trueDelete(i);
+    @PutMapping("/active/{i}")
+    public ResponseEntity<Ubs> activate(@PathVariable Integer i){
+        try {
+            return ubsService.activate(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/setnome/{i}/{n}")
-    public String getNome(@PathVariable Integer i, @PathVariable String n){
-        return ubsService.setName(i, n);
+    @PutMapping("/setnome/{i}")
+    public ResponseEntity<Ubs> setNome(@PathVariable Integer i, @RequestBody String n){
+        try{
+            return ubsService.setName(i, n);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping("/settelefone/{i}/{t}")
-    public String getTelefone(@PathVariable Integer i, @PathVariable String t){
-        return ubsService.setTelefone(i, t);
+    @PutMapping("/settelefone/{i}")
+    public ResponseEntity<Ubs> setTelefone(@PathVariable Integer i, @RequestBody String n) {
+        try {
+            return ubsService.setTelefone(i, n);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
+    @PostMapping("/postone/")
+    public ResponseEntity<Ubs> insertOne(@RequestBody Ubs ubs){
+        try {
+            return ubsService.insetOne(ubs);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

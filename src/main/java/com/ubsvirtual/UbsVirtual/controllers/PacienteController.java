@@ -5,10 +5,7 @@ import com.ubsvirtual.UbsVirtual.services.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,8 +19,12 @@ public class PacienteController {
     PacienteService pacienteService;
 
     @GetMapping("/")
-    public List<Paciente> getAll(){
-        return pacienteService.getAll();
+    public ResponseEntity<List<Paciente>> getAll(){
+        try {
+            return pacienteService.getAll();
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
 
@@ -41,28 +42,64 @@ public class PacienteController {
          }
     }
 
-    @GetMapping("/delete/{i}")
-    public String delete(@PathVariable Integer i){
-        return pacienteService.delete(i);
+    @PutMapping("/active/{i}")
+    public ResponseEntity<Paciente> activate(@PathVariable Integer i){
+        try {
+            return pacienteService.activate(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+
     }
 
-    @GetMapping("/active/{i}")
-    public String activate(@PathVariable Integer i){
-        return pacienteService.activate(i);
+    @PostMapping("/postone/")
+    public ResponseEntity<Paciente> post(@RequestBody Paciente paciente){
+        return pacienteService.postOne(paciente);
     }
 
-    @GetMapping("/truedelete/{i}")
-    public String trueDelete(@PathVariable Integer i){
-        return pacienteService.trueDelete(i);
+    @PutMapping("/setnome/{i}")
+    public ResponseEntity<Paciente> setNome(@RequestBody String novoNome, @PathVariable Integer i){
+        try {
+            return pacienteService.setName(i, novoNome);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/setnome/{i}/{n}")
-    public String setName(@PathVariable Integer i, @PathVariable String n){
-        return pacienteService.setName(i,n);
+    @PutMapping("/setsexo/{i}")
+    public ResponseEntity<Paciente> setSexo(@RequestBody String sexo, @PathVariable Integer i){
+        try {
+            return pacienteService.setSexo(i, sexo);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/setsexo/{i}/{s}")
-    public String setSexo(@PathVariable Integer i, @PathVariable String s){
-        return pacienteService.setSexo(i,s);
+    @PutMapping("/setsenha/{i}")
+    public ResponseEntity<Paciente> setSenha(@RequestBody String senha, @PathVariable Integer i){
+        try {
+            return pacienteService.setSenha(i, senha);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
+
+    @DeleteMapping("/delete/{i}")
+    public ResponseEntity<Paciente> delete(@PathVariable Integer i){
+        try {
+            return pacienteService.delete(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @DeleteMapping("/truedelete/{i}")
+    public ResponseEntity<Paciente> trueDelete(@PathVariable Integer i){
+        try {
+            return pacienteService.trueDelete(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+    }
+
 }

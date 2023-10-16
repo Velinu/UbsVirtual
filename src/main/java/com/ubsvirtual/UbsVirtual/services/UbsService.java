@@ -19,12 +19,21 @@ public class UbsService {
 
     @Autowired
     private UbsRepository ubsRepository;
-    public void insert(List<Ubs> ubs) {
-        this.ubsRepository.insert(ubs);
+    public ResponseEntity<Ubs> insetOne(Ubs ubs) {
+        if(ubsRepository.existsById(ubs.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID já existe");
+        }else {
+            this.ubsRepository.insert(ubs);
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
+        }
     }
 
-    public List<Ubs> getAll(){
-        return  ubsRepository.findAll();
+    public ResponseEntity<List<Ubs>> getAll(){
+        if(ubsRepository.findAll().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Ubs não encontrada");
+        }else {
+            return new ResponseEntity<>(ubsRepository.findAll(), HttpStatus.OK);
+        }
     }
 
     public Page<Ubs> getAllPagination(Integer offset, Integer pageSize){
@@ -33,46 +42,64 @@ public class UbsService {
 
     public Ubs getById(Integer id) {
         Optional<Ubs> ubs = ubsRepository.findById(id);
-        if(!ubs.isPresent()){
+        if(ubs.isEmpty()){
             throw  new ResponseStatusException(HttpStatus.NO_CONTENT);
         }else{
             return ubs.get();
         }
     }
 
-    public String delete(Integer id){
-        Ubs ubs = ubsRepository.findById(id).get();
+    public ResponseEntity<Ubs> delete(Integer id){
+        if(ubsRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
+        }else {
+            Ubs ubs = ubsRepository.findById(id).get();
             ubs.desativar();
             ubsRepository.save(ubs);
-            return "A Ubs de Id " + ubs.getId()+ " foi excluída com sucesso";
-
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
+        }
     }
 
-    public String activate(Integer id){
-        Ubs ubs = ubsRepository.findById(id).get();
+    public ResponseEntity<Ubs> activate(Integer id){
+        if(ubsRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
+        }
+            Ubs ubs = ubsRepository.findById(id).get();
             ubs.ativar();
             ubsRepository.save(ubs);
-            return "A UBS de Id: " + ubs.getId()+ " foi reativada com sucesso";
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
     }
 
-    public String trueDelete(Integer id){
-        Ubs ubs = ubsRepository.findById(id).get();
-        ubsRepository.delete(ubs);
-        return "O registro da ubs de ID: "+id+" foi excluido com sucesso";
+    public ResponseEntity<Ubs> trueDelete(Integer id){
+        if (ubsRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
+        }else {
+            Ubs ubs = ubsRepository.findById(id).get();
+            ubsRepository.delete(ubs);
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
+        }
     }
 
-    public String setName(Integer id, String name){
-        Ubs ubs = ubsRepository.findById(id).get();
-        ubs.setNome(name);
-        ubsRepository.save(ubs);
-        return ubs.getNome();
+    public ResponseEntity<Ubs> setName(Integer id, String name){
+        if (ubsRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
+        }else {
+            Ubs ubs = ubsRepository.findById(id).get();
+            ubs.setNome(name);
+            ubsRepository.save(ubs);
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
+        }
     }
 
-    public String setTelefone(Integer id, String telefone){
-        Ubs ubs = ubsRepository.findById(id).get();
-        ubs.setTelefone(telefone);
-        ubsRepository.save(ubs);
-        return ubs.getTelefone();
+    public ResponseEntity<Ubs> setTelefone(Integer id, String telefone){
+        if(ubsRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
+        }else {
+            Ubs ubs = ubsRepository.findById(id).get();
+            ubs.setTelefone(telefone);
+            ubsRepository.save(ubs);
+            return new ResponseEntity<>(ubs, HttpStatus.OK);
+        }
     }
 
 

@@ -23,16 +23,35 @@ public class MedicoService {
 
     @Autowired
     private MedicoRepository medicoRepository;
-    public void insert(List<Medico> medico) throws CpfException {
+
+    public ResponseEntity<Medico> insert(List<Medico> medico) {
         this.medicoRepository.insert(medico);
+        return new ResponseEntity(medico, HttpStatus.OK);
     }
 
-    public List<Medico> getAll(){
-        return medicoRepository.findAll();
+    public ResponseEntity<Medico> postOne(Medico medico) {
+        if (medicoRepository.existsById(medico.getId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Médico já existente");
+        } else {
+            this.medicoRepository.insert(medico);
+            return new ResponseEntity(medico, HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<List<Medico>> getAll() {
+        if (medicoRepository.findAll().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
+        } else {
+            return new ResponseEntity(medicoRepository.findAll(), HttpStatus.OK);
+        }
     }
 
     public Page<Medico> getAllPagination(Integer offSet, Integer pageSize) {
-        return medicoRepository.findAll(PageRequest.of(offSet, pageSize));
+        if (medicoRepository.findAll(PageRequest.of(offSet, pageSize)).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Médico não encontrado");
+        } else {
+            return medicoRepository.findAll(PageRequest.of(offSet, pageSize));
+        }
     }
 
     public Medico getById(Integer id) {
@@ -44,38 +63,69 @@ public class MedicoService {
         }
     }
 
-    public String delete(Integer id){
-        Medico medico = medicoRepository.findById(id).get();
-        medico.delete();
-        medicoRepository.save(medico);
-        return "O médico de ID: " + id + " foi deletado com sucesso";
+    public ResponseEntity<Medico> delete(Integer id) {
+        Optional<Medico> medico = medicoRepository.findById(id);
+        if (medico.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
+        } else {
+            medico.get().delete();
+            medicoRepository.save(medico.get());
+            return new ResponseEntity(medico.get(), HttpStatus.OK);
+        }
     }
 
-    public String activate(Integer id){
-        Medico medico = medicoRepository.findById(id).get();
-        medico.active();
-        medicoRepository.save(medico);
-        return "O médico de ID: " + id + " foi reativado com sucesso";
+    public ResponseEntity<Medico> activate(Integer id) {
+        Optional<Medico> medico = medicoRepository.findById(id);
+        if (medico.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
+        } else {
+            medico.get().active();
+            medicoRepository.save(medico.get());
+            return new ResponseEntity(medico.get(), HttpStatus.OK);
+        }
     }
 
-    public String trueDelete(Integer id){
-        Medico medico = medicoRepository.findById(id).get();
-        medicoRepository.delete(medico);
-        return "O registro do medico de ID: "+id+" foi excluido com sucesso";
+    public ResponseEntity<Medico> trueDelete(Integer id) {
+        if (medicoRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Médico não encontrado");
+        } else {
+            Medico medico = medicoRepository.findById(id).get();
+            medicoRepository.delete(medico);
+            return new ResponseEntity(medico, HttpStatus.OK);
+        }
     }
 
-    public String setName (Integer id, String nome){
-        Medico medico = medicoRepository.findById(id).get();
-        medico.setNome(nome);
-        medicoRepository.save(medico);
-        return medico.getNome();
+    public ResponseEntity<Medico> setName(Integer id, String nome) {
+        if (medicoRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.OK, "Médico não encontrado");
+        } else {
+            Medico medico = medicoRepository.findById(id).get();
+            medico.setNome(nome.trim());
+            medicoRepository.save(medico);
+            return new ResponseEntity<>(medico, HttpStatus.OK);
+        }
     }
 
-    public String setSexo (Integer id, String sexo){
-        Medico medico = medicoRepository.findById(id).get();
-        medico.setSexo(sexo);
-        medicoRepository.save(medico);
-        return medico.getSexo();
+    public ResponseEntity<Medico> setSexo(Integer id, String sexo) {
+        if (medicoRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
+        } else {
+            Medico medico = medicoRepository.findById(id).get();
+            medico.setSexo(sexo);
+            medicoRepository.save(medico);
+            return new ResponseEntity<>(medico, HttpStatus.OK);
+        }
     }
 
+    public ResponseEntity<Medico> setSenha(Integer id, String senha) {
+        if (medicoRepository.findById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
+        } else {
+            Medico medico = medicoRepository.findById(id).get();
+            medico.setSenha(senha);
+            medicoRepository.save(medico);
+            return new ResponseEntity<>(medico, HttpStatus.OK);
+
+        }
+    }
 }

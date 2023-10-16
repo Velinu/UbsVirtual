@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -22,8 +21,12 @@ public class ConsultaService {
 
     public void insert(List<Consulta> consultas) { this.consultasRepository.insert(consultas); }
 
-    public List<Consulta> getAll() {
-        return consultasRepository.findAll();
+    public ResponseEntity<List<Consulta>> getAll() {
+        if(consultasRepository.findAll().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrada");
+        }else {
+            return new ResponseEntity<>(consultasRepository.findAll(), HttpStatus.OK);
+        }
     }
 
     public Page<Consulta> getAllPagination(Integer offset, Integer pageSize){
@@ -39,24 +42,54 @@ public class ConsultaService {
         }
     }
 
-    public String cancel(Integer id){
-        Consulta consulta = consultasRepository.findById(id).get();
+    public ResponseEntity<Consulta> cancel(Integer id){
+        if(consultasRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrada");
+        }else {
+            Consulta consulta = consultasRepository.findById(id).get();
             consulta.cancelar();
             consultasRepository.save(consulta);
-            return "A Consulta de Id " + consulta.getId()+ " foi cancelada com sucesso";
+            return new ResponseEntity<>(consulta, HttpStatus.OK);
+        }
     }
 
-    public String conclude(Integer id){
-        Consulta consulta = consultasRepository.findById(id).get();
-        consulta.concluir();
-        consultasRepository.save(consulta);
-        return "A Consulta de Id " + consulta.getId()+ " foi concluída com sucesso";
-
+    public ResponseEntity<Consulta> conclude(Integer id){
+        if(consultasRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrada");
+        }else {
+            Consulta consulta = consultasRepository.findById(id).get();
+            consulta.concluir();
+            consultasRepository.save(consulta);
+            return new ResponseEntity<>(consulta, HttpStatus.OK);
+        }
     }
 
-    public String trueDelete(Integer id){
-        Consulta consulta = consultasRepository.findById(id).get();
-        consultasRepository.delete(consulta);
-        return "O registro da consulta de ID: "+id+" foi excluido com sucesso";
+    public ResponseEntity<Consulta> trueDelete(Integer id){
+        if(consultasRepository.findById(id).isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrado");
+        }else {
+            Consulta consulta = consultasRepository.findById(id).get();
+            consultasRepository.delete(consulta);
+            return new ResponseEntity<>(consulta, HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<Consulta> postOne(Consulta c){
+        if (consultasRepository.existsById(c.getId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Este id já está cadastrado");
+        }
+        consultasRepository.insert(c);
+        return new ResponseEntity<>(c, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Consulta> setAnnotation(Integer i, String s) {
+        if(consultasRepository.findById(i).isEmpty()){
+            throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encconttrada");
+        }else{
+            Consulta consulta = consultasRepository.findById(i).get();
+            consulta.setAnotattion(s);
+            consultasRepository.save(consulta);
+            return new ResponseEntity<>(consulta, HttpStatus.OK);
+        }
     }
 }

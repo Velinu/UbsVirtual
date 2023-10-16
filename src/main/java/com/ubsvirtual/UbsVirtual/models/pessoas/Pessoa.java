@@ -17,8 +17,9 @@ public class Pessoa implements ValidadorCpf {
     private String sexo;
     private TiposSanguineo tipo_sanguineo;
     private boolean ativo;
+    private String senha;
 
-    public Pessoa(Integer id, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo) throws CpfException {
+    public Pessoa(Integer id, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo, String senha) throws CpfException {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -26,9 +27,18 @@ public class Pessoa implements ValidadorCpf {
         this.sexo = sexo;
         this.tipo_sanguineo = tipo_sanguineo;
         this.ativo = true;
+        this.senha = senha;
         if(!validaCpf()){
             throw new CpfException();
         }
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public Integer getId() {
@@ -60,7 +70,7 @@ public class Pessoa implements ValidadorCpf {
     }
 
     public void setSexo(String sexo) {
-        this.nome = sexo;
+        this.sexo = sexo;
     }
 
     @Override

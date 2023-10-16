@@ -9,17 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/consulta")
 public class ConsultaController {
     @Autowired
     ConsultaService consultaService;
-
     @GetMapping("/")
-    public List<Consulta> getAll(){
-        return consultaService.getAll();
+    public ResponseEntity<List<Consulta>> getAll(){
+        try {
+            return consultaService.getAll();
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}")
@@ -34,21 +36,53 @@ public class ConsultaController {
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
-
     }
 
-    @GetMapping("/delete/{i}")
-    public String delete(@PathVariable Integer i){
-        return consultaService.cancel(i);
+    @PostMapping("/postone/")
+    public ResponseEntity<Consulta> postOne(@RequestBody Consulta c){
+        try {
+            return consultaService.postOne(c);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping("/conclude/{i}")
-    public String conclude(@PathVariable Integer i){
-        return consultaService.conclude(i);
+    @PutMapping("/conclude/{i}")
+    public ResponseEntity<Consulta> conclude(@PathVariable Integer i){
+        try {
+            return consultaService.conclude(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @GetMapping("/truedelete/{i}")
-    public String trueDelete(@PathVariable Integer i){
-        return consultaService.trueDelete(i);
+    @DeleteMapping("/delete/{i}")
+    public ResponseEntity<Consulta> delete(@PathVariable Integer i){
+        try {
+            return consultaService.cancel(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
     }
+
+    @DeleteMapping("/truedelete/{i}")
+    public ResponseEntity<Consulta> trueDelete(@PathVariable Integer i){
+        try{
+            return consultaService.trueDelete(i);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+    @PutMapping("/setannotation/{i}")
+    public ResponseEntity<Consulta> setAnnotation(@PathVariable Integer i, @RequestBody String s){
+        try{
+            return consultaService.setAnnotation(i, s);
+        }catch (ResponseStatusException e){
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+
+
 }
