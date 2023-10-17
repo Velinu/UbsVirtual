@@ -1,8 +1,5 @@
 package com.ubsvirtual.UbsVirtual.services;
 
-import com.ubsvirtual.UbsVirtual.exceptions.CpfException;
-import com.ubsvirtual.UbsVirtual.models.consultas.Consulta;
-import com.ubsvirtual.UbsVirtual.models.pessoas.Especializacao;
 import com.ubsvirtual.UbsVirtual.models.pessoas.Medico;
 import com.ubsvirtual.UbsVirtual.repositorys.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -24,17 +19,12 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public ResponseEntity<Medico> insert(List<Medico> medico) {
-        this.medicoRepository.insert(medico);
-        return new ResponseEntity(medico, HttpStatus.OK);
-    }
-
     public ResponseEntity<Medico> postOne(Medico medico) {
         if (medicoRepository.existsById(medico.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Médico já existente");
         } else {
             this.medicoRepository.insert(medico);
-            return new ResponseEntity(medico, HttpStatus.OK);
+            return new ResponseEntity<>(medico, HttpStatus.OK);
         }
     }
 
@@ -42,7 +32,7 @@ public class MedicoService {
         if (medicoRepository.findAll().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Medico não encontrado");
         } else {
-            return new ResponseEntity(medicoRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(medicoRepository.findAll(), HttpStatus.OK);
         }
     }
 
@@ -70,7 +60,7 @@ public class MedicoService {
         } else {
             medico.get().delete();
             medicoRepository.save(medico.get());
-            return new ResponseEntity(medico.get(), HttpStatus.OK);
+            return new ResponseEntity<>(medico.get(), HttpStatus.OK);
         }
     }
 
@@ -81,7 +71,7 @@ public class MedicoService {
         } else {
             medico.get().active();
             medicoRepository.save(medico.get());
-            return new ResponseEntity(medico.get(), HttpStatus.OK);
+            return new ResponseEntity<>(medico.get(), HttpStatus.OK);
         }
     }
 
@@ -91,7 +81,7 @@ public class MedicoService {
         } else {
             Medico medico = medicoRepository.findById(id).get();
             medicoRepository.delete(medico);
-            return new ResponseEntity(medico, HttpStatus.OK);
+            return new ResponseEntity<>(medico, HttpStatus.OK);
         }
     }
 

@@ -3,10 +3,13 @@ package com.ubsvirtual.UbsVirtual.models.pessoas;
 import com.ubsvirtual.UbsVirtual.exceptions.CpfException;
 import com.ubsvirtual.UbsVirtual.interfaces.ValidadorCpf;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
-public class Pessoa implements ValidadorCpf {
+abstract class Pessoa implements ValidadorCpf{
 
     @Id
     private Integer id;
@@ -19,7 +22,14 @@ public class Pessoa implements ValidadorCpf {
     private boolean ativo;
     private String senha;
 
-    public Pessoa(Integer id, String cpf, String nome, LocalDate nascimento, String sexo, TiposSanguineo tipo_sanguineo, String senha) throws CpfException {
+
+    public Pessoa(Integer id,
+                  String cpf,
+                  String nome,
+                  LocalDate nascimento,
+                  String sexo,
+                  TiposSanguineo tipo_sanguineo,
+                  String senha) throws CpfException {
         this.id = id;
         this.cpf = cpf;
         this.nome = nome;
@@ -119,4 +129,7 @@ public class Pessoa implements ValidadorCpf {
     public void active() {
         ativo = true;
     }
+
+    abstract Collection<? extends GrantedAuthority> getAuthorities();
+
 }
