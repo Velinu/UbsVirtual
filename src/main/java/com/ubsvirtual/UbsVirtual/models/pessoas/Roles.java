@@ -2,9 +2,9 @@ package com.ubsvirtual.UbsVirtual.models.pessoas;
 
 
 public enum Roles {
-    MEDICO("Medico"),
-    PACIENTE("Paciente"),
-    ADMINISTRADOR("Administrador");
+    MEDICO("MEDIC"),
+    PACIENTE("PACIENTE"),
+    ADMIN("ADMIN");
 
     private final String nome;
     Roles(String nome){

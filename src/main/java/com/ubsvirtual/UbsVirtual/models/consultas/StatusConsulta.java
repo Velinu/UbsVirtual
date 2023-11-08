@@ -1,15 +1,13 @@
 package com.ubsvirtual.UbsVirtual.models.consultas;
 
 public enum StatusConsulta {
-    PENDENTE(0, "Pendente"),
-    CONCLUIDA(1, "Concluída"),
-    CANCELADA(2, "Cancelada");
+    PENDENTE("Pendente"),
+    CONCLUIDA("Concluída"),
+    CANCELADA("Cancelada");
 
-    private Integer id;
     private String status;
 
-    StatusConsulta(Integer id, String status){
-        this.id = id;
+    StatusConsulta(String status){
         this.status = status;
     }
 
@@ -17,7 +15,4 @@ public enum StatusConsulta {
         return status;
     }
 
-    public Integer getId() {
-        return id;
-    }
 }

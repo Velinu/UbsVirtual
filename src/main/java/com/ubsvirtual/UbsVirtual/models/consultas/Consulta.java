@@ -5,6 +5,7 @@ import com.ubsvirtual.UbsVirtual.models.pessoas.Medico;
 import com.ubsvirtual.UbsVirtual.models.pessoas.Paciente;
 import com.ubsvirtual.UbsVirtual.models.ubs.Ubs;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -19,8 +20,8 @@ public class Consulta implements GerenciadorConsulta {
     private Paciente paciente;
     private Ubs ubs;
     private ModalidadeConsulta modalidade;
-    private LocalDateTime horaInicio; //conferir depois
-    private LocalDateTime horaFinal; //conferir depois
+    private LocalDateTime horaInicio;
+    private LocalDateTime horaFinal;
     private String anotacoes;
     private StatusConsulta statusConsulta;
 
@@ -72,7 +73,6 @@ public class Consulta implements GerenciadorConsulta {
         return statusConsulta;
     }
 
-    //métodos do gerenciador
 
     @Override
     public void cancelar() {

@@ -4,7 +4,6 @@ import com.ubsvirtual.UbsVirtual.models.pessoas.Medico;
 import com.ubsvirtual.UbsVirtual.services.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -80,7 +79,7 @@ public class MedicoController {
     @PutMapping("/active/{i}")
     public ResponseEntity<Medico> activate(@PathVariable Integer i){
         try {
-            return new ResponseEntity(medicoService.activate(i), HttpStatus.OK);
+            return medicoService.activate(i);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -89,7 +88,7 @@ public class MedicoController {
     @DeleteMapping("/delete/{i}")
     public ResponseEntity<Medico> delete(@PathVariable Integer i){
         try {
-            return new ResponseEntity(medicoService.delete(i), HttpStatus.OK);
+            return medicoService.delete(i);
         }catch(ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -98,7 +97,7 @@ public class MedicoController {
     @DeleteMapping("/truedelete/{i}")
     public ResponseEntity<Medico> trueDelete(@PathVariable Integer i){
         try {
-            return new ResponseEntity(medicoService.trueDelete(i), HttpStatus.OK);
+            return medicoService.trueDelete(i);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }

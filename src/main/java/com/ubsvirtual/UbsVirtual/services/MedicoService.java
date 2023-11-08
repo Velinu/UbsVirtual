@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MedicoService {
+public class MedicoService{
 
     @Autowired
     private MedicoRepository medicoRepository;
@@ -118,4 +118,5 @@ public class MedicoService {
 
         }
     }
+
 }

@@ -1,22 +1,17 @@
 package com.ubsvirtual.UbsVirtual.models.consultas;
 
 public enum ModalidadeConsulta {
-    PRESENCIAL(0, "Presencial"),
-    ONLINE(1, "Online");
+    PRESENCIAL("Presencial"),
+    ONLINE("Online");
 
     private int id;
     private String tipo;
 
-    ModalidadeConsulta(int id, String tipo){
-        this.id = id;
+    ModalidadeConsulta(String tipo) {
         this.tipo = tipo;
     }
 
     public String getTipo() {
         return tipo;
-    }
-
-    public int getId() {
-        return id;
     }
 }
