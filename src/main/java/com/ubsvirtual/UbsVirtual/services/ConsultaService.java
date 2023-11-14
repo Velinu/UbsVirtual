@@ -42,54 +42,54 @@ public class ConsultaService {
         }
     }
 
-    public ResponseEntity<Consulta> cancel(Integer id){
+    public Consulta cancel(Integer id){
         if(consultasRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrada");
         }else {
             Consulta consulta = consultasRepository.findById(id).get();
             consulta.cancelar();
             consultasRepository.save(consulta);
-            return new ResponseEntity<>(consulta, HttpStatus.OK);
+            return consulta;
         }
     }
 
-    public ResponseEntity<Consulta> conclude(Integer id){
+    public Consulta conclude(Integer id){
         if(consultasRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrada");
         }else {
             Consulta consulta = consultasRepository.findById(id).get();
             consulta.concluir();
             consultasRepository.save(consulta);
-            return new ResponseEntity<>(consulta, HttpStatus.OK);
+            return consulta;
         }
     }
 
-    public ResponseEntity<Consulta> trueDelete(Integer id){
+    public Consulta trueDelete(Integer id){
         if(consultasRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encontrado");
         }else {
             Consulta consulta = consultasRepository.findById(id).get();
             consultasRepository.delete(consulta);
-            return new ResponseEntity<>(consulta, HttpStatus.OK);
+            return consulta;
         }
     }
 
-    public ResponseEntity<Consulta> postOne(Consulta c){
+    public Consulta postOne(Consulta c){
         if (consultasRepository.existsById(c.getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Este id já está cadastrado");
         }
         consultasRepository.insert(c);
-        return new ResponseEntity<>(c, HttpStatus.OK);
+        return c;
     }
 
-    public ResponseEntity<Consulta> setAnnotation(Integer i, String s) {
+    public Consulta setAnnotation(Integer i, String s) {
         if(consultasRepository.findById(i).isEmpty()){
             throw  new ResponseStatusException(HttpStatus.NO_CONTENT, "Consulta não encconttrada");
         }else{
             Consulta consulta = consultasRepository.findById(i).get();
             consulta.setAnotattion(s);
             consultasRepository.save(consulta);
-            return new ResponseEntity<>(consulta, HttpStatus.OK);
+            return consulta;
         }
     }
 }

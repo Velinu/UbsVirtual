@@ -4,6 +4,7 @@ import com.ubsvirtual.UbsVirtual.models.consultas.Consulta;
 import com.ubsvirtual.UbsVirtual.services.ConsultaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,7 +42,7 @@ public class ConsultaController {
     @PostMapping("/postone/")
     public ResponseEntity<Consulta> postOne(@RequestBody Consulta c){
         try {
-            return consultaService.postOne(c);
+            return new ResponseEntity<>(consultaService.postOne(c), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.badRequest().build();
         }
@@ -50,7 +51,7 @@ public class ConsultaController {
     @PutMapping("/conclude/{i}")
     public ResponseEntity<Consulta> conclude(@PathVariable Integer i){
         try {
-            return consultaService.conclude(i);
+            return new ResponseEntity<>(consultaService.conclude(i),HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -59,7 +60,7 @@ public class ConsultaController {
     @DeleteMapping("/delete/{i}")
     public ResponseEntity<Consulta> delete(@PathVariable Integer i){
         try {
-            return consultaService.cancel(i);
+            return new ResponseEntity<>(consultaService.cancel(i), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -68,7 +69,7 @@ public class ConsultaController {
     @DeleteMapping("/truedelete/{i}")
     public ResponseEntity<Consulta> trueDelete(@PathVariable Integer i){
         try{
-            return consultaService.trueDelete(i);
+            return new ResponseEntity<>(consultaService.trueDelete(i),HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -77,7 +78,7 @@ public class ConsultaController {
     @PutMapping("/setannotation/{i}")
     public ResponseEntity<Consulta> setAnnotation(@PathVariable Integer i, @RequestBody String s){
         try{
-            return consultaService.setAnnotation(i, s);
+            return new ResponseEntity<>(consultaService.setAnnotation(i, s), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }

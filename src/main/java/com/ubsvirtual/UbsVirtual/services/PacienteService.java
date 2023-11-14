@@ -28,11 +28,11 @@ public class PacienteService {
         }
     }
 
-    public ResponseEntity<List<Paciente>> getAll(){
+    public List<Paciente> getAll(){
         if (pacienteRepository.findAll().isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }else {
-            return new  ResponseEntity<>(pacienteRepository.findAll(), HttpStatus.OK);
+            return pacienteRepository.findAll();
         }
     }
 
@@ -51,67 +51,67 @@ public class PacienteService {
         }
     }
 
-    public ResponseEntity<Paciente> delete(Integer id){
+    public Paciente delete(Integer id){
         if ( pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }else {
             Paciente paciente = pacienteRepository.findById(id).get();
             paciente.delete();
             pacienteRepository.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
+            return paciente;
         }
     }
 
-    public ResponseEntity<Paciente> activate(Integer id){
+    public Paciente activate(Integer id){
         if(pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }else {
             Paciente paciente = pacienteRepository.findById(id).get();
             paciente.active();
             pacienteRepository.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
+            return paciente;
         }
     }
 
-    public ResponseEntity<Paciente> trueDelete(Integer id){
+    public Paciente trueDelete(Integer id){
         if(pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }
         Paciente paciente = pacienteRepository.findById(id).get();
         pacienteRepository.delete(paciente);
-        return new ResponseEntity<>(paciente, HttpStatus.OK);
+        return paciente;
     }
 
-    public ResponseEntity<Paciente> setName (Integer id, String nome){
+    public Paciente setName (Integer id, String nome){
         if(pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }else {
             Paciente paciente = pacienteRepository.findById(id).get();
             paciente.setNome(nome);
             pacienteRepository.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
+            return paciente;
         }
     }
 
-    public ResponseEntity<Paciente> setSexo (Integer id, String sexo){
+    public Paciente setSexo (Integer id, String sexo){
         if(pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }else {
             Paciente paciente = pacienteRepository.findById(id).get();
             paciente.setSexo(sexo);
             pacienteRepository.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
+            return paciente;
         }
     }
 
-    public ResponseEntity<Paciente> setSenha (Integer id, String senha){
+    public Paciente setSenha (Integer id, String senha){
         if(pacienteRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Paciente não encontrado");
         }else {
             Paciente paciente = pacienteRepository.findById(id).get();
             paciente.setSenha(senha);
             pacienteRepository.save(paciente);
-            return new ResponseEntity<>(paciente, HttpStatus.OK);
+            return paciente;
         }
     }
 }

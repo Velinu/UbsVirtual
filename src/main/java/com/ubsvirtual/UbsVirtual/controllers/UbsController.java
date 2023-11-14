@@ -6,6 +6,8 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,7 +24,7 @@ public class UbsController {
     @GetMapping("/")
     public ResponseEntity<List<Ubs>> getAll(){
         try {
-            return ubsService.getAll();
+            return new ResponseEntity<>(ubsService.getAll(), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -37,7 +39,7 @@ public class UbsController {
     @GetMapping("/{i}")
     public ResponseEntity<Ubs> getById(@PathVariable Integer i){
         try {
-            return ResponseEntity.ok(ubsService.getById(i));
+            return new ResponseEntity<>(ubsService.getById(i), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -47,7 +49,7 @@ public class UbsController {
     public ResponseEntity<Ubs> delete(@PathVariable Integer i){
 
         try{
-            return ubsService.delete(i);
+            return new ResponseEntity<>(ubsService.delete(i), HttpStatus.OK);
         }catch(ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -56,7 +58,7 @@ public class UbsController {
     @DeleteMapping("/truedelete/{i}")
     public ResponseEntity<Ubs> trueDelete(@PathVariable Integer i){
         try {
-            return ubsService.trueDelete(i);
+            return new ResponseEntity<>(ubsService.trueDelete(i), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -65,7 +67,7 @@ public class UbsController {
     @PutMapping("/active/{i}")
     public ResponseEntity<Ubs> activate(@PathVariable Integer i){
         try {
-            return ubsService.activate(i);
+            return new ResponseEntity<>(ubsService.activate(i), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.noContent().build();
         }
@@ -74,7 +76,7 @@ public class UbsController {
     @PutMapping("/setnome/{i}")
     public ResponseEntity<Ubs> setNome(@PathVariable Integer i, @RequestBody String n){
         try{
-            return ubsService.setName(i, n);
+            return new ResponseEntity<>(ubsService.setName(i, n), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.badRequest().build();
         }
@@ -83,7 +85,7 @@ public class UbsController {
     @PutMapping("/settelefone/{i}")
     public ResponseEntity<Ubs> setTelefone(@PathVariable Integer i, @RequestBody String n) {
         try {
-            return ubsService.setTelefone(i, n);
+            return new ResponseEntity<>(ubsService.setTelefone(i, n), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.badRequest().build();
         }
@@ -93,7 +95,7 @@ public class UbsController {
     @PostMapping("/postone/")
     public ResponseEntity<Ubs> insertOne(@RequestBody Ubs ubs){
         try {
-            return ubsService.insetOne(ubs);
+            return new ResponseEntity<>(ubsService.insetOne(ubs), HttpStatus.OK);
         }catch (ResponseStatusException e){
             return ResponseEntity.badRequest().build();
         }

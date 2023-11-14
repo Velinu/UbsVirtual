@@ -19,20 +19,20 @@ public class UbsService {
 
     @Autowired
     private UbsRepository ubsRepository;
-    public ResponseEntity<Ubs> insetOne(Ubs ubs) {
+    public Ubs insetOne(Ubs ubs) {
         if(ubsRepository.existsById(ubs.getId())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID já existe");
         }else {
             this.ubsRepository.insert(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
         }
     }
 
-    public ResponseEntity<List<Ubs>> getAll(){
+    public List<Ubs> getAll(){
         if(ubsRepository.findAll().isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Ubs não encontrada");
         }else {
-            return new ResponseEntity<>(ubsRepository.findAll(), HttpStatus.OK);
+            return ubsRepository.findAll();
         }
     }
 
@@ -49,56 +49,56 @@ public class UbsService {
         }
     }
 
-    public ResponseEntity<Ubs> delete(Integer id){
+    public Ubs delete(Integer id){
         if(ubsRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
         }else {
             Ubs ubs = ubsRepository.findById(id).get();
             ubs.desativar();
             ubsRepository.save(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
         }
     }
 
-    public ResponseEntity<Ubs> activate(Integer id){
+    public Ubs activate(Integer id){
         if(ubsRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
         }
             Ubs ubs = ubsRepository.findById(id).get();
             ubs.ativar();
             ubsRepository.save(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
     }
 
-    public ResponseEntity<Ubs> trueDelete(Integer id){
+    public Ubs trueDelete(Integer id){
         if (ubsRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
         }else {
             Ubs ubs = ubsRepository.findById(id).get();
             ubsRepository.delete(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
         }
     }
 
-    public ResponseEntity<Ubs> setName(Integer id, String name){
+    public Ubs setName(Integer id, String name){
         if (ubsRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
         }else {
             Ubs ubs = ubsRepository.findById(id).get();
             ubs.setNome(name);
             ubsRepository.save(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
         }
     }
 
-    public ResponseEntity<Ubs> setTelefone(Integer id, String telefone){
+    public Ubs setTelefone(Integer id, String telefone){
         if(ubsRepository.findById(id).isEmpty()){
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "UBS não encontrada");
         }else {
             Ubs ubs = ubsRepository.findById(id).get();
             ubs.setTelefone(telefone);
             ubsRepository.save(ubs);
-            return new ResponseEntity<>(ubs, HttpStatus.OK);
+            return ubs;
         }
     }
 
