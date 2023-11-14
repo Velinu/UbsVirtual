@@ -68,7 +68,6 @@ public class UbsVirtualApplication implements CommandLineRunner {
 		ListaLigada<Medico> listaMedicos = new ListaLigada<>();
 		for (Medico medico : medicoRepository.findAll()){
 			listaMedicos.adicionarFinal(medico);
-			System.out.println(listaMedicos.getUltimo().getValor().getCpf());
 		}
 		
 	}

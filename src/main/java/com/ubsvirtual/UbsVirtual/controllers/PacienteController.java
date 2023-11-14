@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 @RequestMapping("/paciente")
 public class PacienteController {

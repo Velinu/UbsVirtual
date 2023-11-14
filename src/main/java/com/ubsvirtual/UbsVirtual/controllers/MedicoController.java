@@ -11,11 +11,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 @RequestMapping("/medico")
 public class MedicoController {
     @Autowired
     MedicoService medicoService;
+
 
     @GetMapping("/")
     public ResponseEntity<List<Medico>> getAll(){

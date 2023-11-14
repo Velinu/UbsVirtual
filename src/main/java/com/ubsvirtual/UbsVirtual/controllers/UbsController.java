@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500/")
 @RestController
 @RequestMapping("/ubs")
 public class UbsController {
