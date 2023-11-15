@@ -32,7 +32,6 @@ public class UbsVirtualApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws CpfException {
 
-<<<<<<< HEAD
 		Medico medico1 = new Medico(1,
 				"sdf",
 				Especializacao.ANESTESIOLOGIA,
@@ -69,8 +68,6 @@ public class UbsVirtualApplication implements CommandLineRunner {
 		for (Medico medico : medicoRepository.findAll()){
 			listaMedicos.adicionarFinal(medico);
 		}
-		
-=======
->>>>>>> e2dffd1ad8d77ac7089737bc89e2194d3d669778
+
 	}
 }
