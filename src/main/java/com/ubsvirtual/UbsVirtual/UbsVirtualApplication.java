@@ -31,8 +31,6 @@ public class UbsVirtualApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws CpfException {
 
-
-
 		Medico medico1 = new Medico(1,
 				"sdf",
 				Especializacao.ANESTESIOLOGIA,
