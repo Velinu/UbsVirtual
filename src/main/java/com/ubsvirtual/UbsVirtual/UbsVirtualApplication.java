@@ -3,8 +3,12 @@ package com.ubsvirtual.UbsVirtual;
 import com.ubsvirtual.UbsVirtual.exceptions.CpfException;
 import com.ubsvirtual.UbsVirtual.models.pessoas.Especializacao;
 import com.ubsvirtual.UbsVirtual.models.pessoas.Medico;
+import com.ubsvirtual.UbsVirtual.models.pessoas.Paciente;
 import com.ubsvirtual.UbsVirtual.models.pessoas.TiposSanguineo;
+import com.ubsvirtual.UbsVirtual.models.ubs.Ubs;
 import com.ubsvirtual.UbsVirtual.repositorys.MedicoRepository;
+import com.ubsvirtual.UbsVirtual.repositorys.PacienteRepository;
+import com.ubsvirtual.UbsVirtual.repositorys.UbsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,12 +29,10 @@ public class UbsVirtualApplication implements CommandLineRunner {
 		SpringApplication.run(UbsVirtualApplication.class, args);
 	}
 
-	@Autowired
-	MedicoRepository medicoRepository;
-
 	@Override
 	public void run(String... args) throws CpfException {
 
+<<<<<<< HEAD
 		Medico medico1 = new Medico(1,
 				"sdf",
 				Especializacao.ANESTESIOLOGIA,
@@ -68,5 +70,7 @@ public class UbsVirtualApplication implements CommandLineRunner {
 			listaMedicos.adicionarFinal(medico);
 		}
 		
+=======
+>>>>>>> e2dffd1ad8d77ac7089737bc89e2194d3d669778
 	}
 }
