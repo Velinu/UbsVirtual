@@ -17,7 +17,6 @@ abstract class Pessoa implements ValidadorCpf{
     private TiposSanguineo tipo_sanguineo;
     private boolean ativo;
     private String senha;
-    private EstadoCivil estadoCivil;
 
 
     public Pessoa(Integer id,
