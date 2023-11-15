@@ -98,7 +98,7 @@ abstract class Pessoa implements ValidadorCpf{
             primeiroDigito = 0;
         }
         if (primeiroDigito != Character.getNumericValue(cpfFormatado.charAt(9))) {
-            return false;
+            return false; //CAIR AQUI
         }
 
         soma = 0;
@@ -125,6 +125,5 @@ abstract class Pessoa implements ValidadorCpf{
     public void active() {
         ativo = true;
     }
-
 
 }

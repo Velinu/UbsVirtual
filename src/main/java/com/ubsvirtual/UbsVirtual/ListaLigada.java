@@ -17,11 +17,9 @@ public class ListaLigada<Tipo> {
         return ultimo;
     }
 
-
     public Integer getTamanho() {
         return tamanho;
     }
-
 
     public Node<Tipo> getPorValor(Tipo valor) {
         Node<Tipo> atual = this.primeiro;

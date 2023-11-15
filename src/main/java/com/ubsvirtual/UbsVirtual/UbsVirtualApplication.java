@@ -12,6 +12,7 @@ import com.ubsvirtual.UbsVirtual.repositorys.ConsultasRepository;
 import com.ubsvirtual.UbsVirtual.repositorys.MedicoRepository;
 import com.ubsvirtual.UbsVirtual.repositorys.PacienteRepository;
 import com.ubsvirtual.UbsVirtual.repositorys.UbsRepository;
+import org.bson.assertions.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,11 +32,15 @@ public class UbsVirtualApplication implements CommandLineRunner {
 
     }
     public static void main(String[] args) {
-		SpringApplication.run(UbsVirtualApplication.class, args);
+
+
 	}
+
+
 
 	@Override
 	public void run(String... args) throws CpfException {
+
 
 	}
 }

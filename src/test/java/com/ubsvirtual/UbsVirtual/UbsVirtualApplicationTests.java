@@ -237,4 +237,70 @@ class UbsVirtualApplicationTests {
 		listaMedico.removerUltimo();
 		Assertions.assertEquals(null, listaMedico.getPrimeiro());
 	}
+
+
+	@Test
+	public void DeveRemoverPorValor() throws CpfException{
+		ListaLigada<Medico> listaMedico = new ListaLigada<>();
+		Assertions.assertEquals(null, listaMedico.removerPorValor(new Medico(1,
+				"sdf",
+				Especializacao.ANESTESIOLOGIA,
+				"12766560920",
+				"Matheus",
+				LocalDate.of(2004,04,20),
+				"F",
+				TiposSanguineo.A_NEGATIVO,
+				"Teste1")));
+
+		Medico medico1 = new Medico(1,
+				"sdf",
+				Especializacao.ANESTESIOLOGIA,
+				"12766560920",
+				"Matheus",
+				LocalDate.of(2004,04,20),
+				"F",
+				TiposSanguineo.A_NEGATIVO,
+				"Teste1");
+		Medico medico2 = new Medico(1,
+				"sdf",
+				Especializacao.ANESTESIOLOGIA,
+				"12766560920",
+				"Pedro",
+				LocalDate.of(2004,04,20),
+				"F",
+				TiposSanguineo.A_NEGATIVO,
+				"Teste1");
+		Medico medico3 = new Medico(1,
+				"sdf",
+				Especializacao.ANESTESIOLOGIA,
+				"12766560920",
+				"Rubens",
+				LocalDate.of(2004,04,20),
+				"F",
+				TiposSanguineo.A_NEGATIVO,
+				"Teste1");
+
+		Assertions.assertNull(listaMedico.removerPrimeiro());
+		Assertions.assertNull(listaMedico.removerUltimo());
+
+		listaMedico.adicionarInicio(medico1);
+		listaMedico.adicionarInicio(medico2);
+		listaMedico.adicionarFinal(medico3);
+
+		Assertions.assertEquals(listaMedico.getPorValor(medico1), listaMedico.removerPorValor(medico1));
+		listaMedico.removerPorValor(medico1);
+		Assertions.assertNull(listaMedico.removerPorValor(medico3));
+		listaMedico.removerPorValor(medico3);
+		Assertions.assertNull(listaMedico.removerPorValor(medico2));
+
+		Assertions.assertNull(listaMedico.getPorValor(medico1));
+
+		listaMedico.adicionarInicio(medico1);
+		listaMedico.adicionarFinal(medico3);
+
+		Assertions.assertNull(listaMedico.removerPorValor(medico1));
+
+	}
+
+
 }
