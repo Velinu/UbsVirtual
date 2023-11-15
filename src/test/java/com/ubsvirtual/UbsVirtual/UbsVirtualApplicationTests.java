@@ -289,6 +289,14 @@ class UbsVirtualApplicationTests {
 		Assertions.assertNull(listaMedico.removerPorValor(medico3));
 		listaMedico.removerPorValor(medico3);
 		Assertions.assertNull(listaMedico.removerPorValor(medico2));
+
+		Assertions.assertNull(listaMedico.getPorValor(medico1));
+
+		listaMedico.adicionarInicio(medico1);
+		listaMedico.adicionarFinal(medico3);
+
+		Assertions.assertNull(listaMedico.removerPorValor(medico1));
+
 	}
 
 
