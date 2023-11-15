@@ -25,6 +25,9 @@ public class Paciente extends Pessoa{
         this.role = Roles.PACIENTE;
     }
 
+    public void setUltima_consulta(LocalDate ultima_consulta) {
+        this.ultima_consulta = ultima_consulta;
+    }
 
     public LocalDate getUltima_consulta() {
         return ultima_consulta;

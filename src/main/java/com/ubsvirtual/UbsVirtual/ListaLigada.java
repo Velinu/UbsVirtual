@@ -13,25 +13,15 @@ public class ListaLigada<Tipo> {
         return primeiro;
     }
 
-    public void setPrimeiro(Node<Tipo> primeiro) {
-        this.primeiro = primeiro;
-    }
-
     public Node<Tipo> getUltimo() {
         return ultimo;
     }
 
-    public void setUltimo(Node<Tipo> ultimo) {
-        this.ultimo = ultimo;
-    }
 
     public Integer getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(Integer tamanho) {
-        this.tamanho = tamanho;
-    }
 
     public Node<Tipo> getPorValor(Tipo valor) {
         Node<Tipo> atual = this.primeiro;
