@@ -9,6 +9,7 @@ import com.ubsvirtual.UbsVirtual.models.ubs.Ubs;
 import com.ubsvirtual.UbsVirtual.repositorys.MedicoRepository;
 import com.ubsvirtual.UbsVirtual.repositorys.PacienteRepository;
 import com.ubsvirtual.UbsVirtual.repositorys.UbsRepository;
+import org.bson.assertions.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

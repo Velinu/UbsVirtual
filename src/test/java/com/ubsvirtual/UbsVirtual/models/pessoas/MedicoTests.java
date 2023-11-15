@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-@SpringBootTest
 public class MedicoTests {
 
     @Test
@@ -24,8 +23,9 @@ public class MedicoTests {
                 "Teste1"
         );
 
-        Assertions.assertEquals("sdf", medico.getCrm());
+        Assertions.assertEquals("1234567", medico.getCrm());
         Assertions.assertEquals(Especializacao.ANESTESIOLOGIA, medico.getEspecializacao());
+
     }
 
 }

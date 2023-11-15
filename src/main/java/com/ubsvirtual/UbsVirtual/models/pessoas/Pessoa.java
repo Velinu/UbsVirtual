@@ -126,5 +126,4 @@ abstract class Pessoa implements ValidadorCpf{
         ativo = true;
     }
 
-
 }
