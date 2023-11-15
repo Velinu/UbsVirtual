@@ -24,7 +24,7 @@ public class MedicoTests {
                 "Teste1"
         );
 
-        Assertions.assertEquals("sdf", medico.getCrm());
+        Assertions.assertEquals("1234567", medico.getCrm());
         Assertions.assertEquals(Especializacao.ANESTESIOLOGIA, medico.getEspecializacao());
     }
 

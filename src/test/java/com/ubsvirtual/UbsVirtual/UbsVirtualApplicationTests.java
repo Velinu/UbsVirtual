@@ -280,6 +280,9 @@ class UbsVirtualApplicationTests {
 				TiposSanguineo.A_NEGATIVO,
 				"Teste1");
 
+		Assertions.assertNull(listaMedico.removerPrimeiro());
+		Assertions.assertNull(listaMedico.removerUltimo());
+
 		listaMedico.adicionarInicio(medico1);
 		listaMedico.adicionarInicio(medico2);
 		listaMedico.adicionarFinal(medico3);

@@ -28,35 +28,13 @@ public class UbsVirtualApplication implements CommandLineRunner {
     }
 
     public static void main(String[] args) {
-		SpringApplication.run(UbsVirtualApplication.class, args);
+
 	}
-	@Autowired
-	UbsRepository  ubsRepository;
 
-	@Autowired
-	MedicoRepository medicoRepository;
-
-	@Autowired
-	PacienteRepository pacienteRepository;
 
 	@Override
 	public void run(String... args) throws CpfException {
 
-		Medico medico1 = new Medico(3,
-				"1234567",
-				Especializacao.ANESTESIOLOGIA,
-				"12766560920",
-				"Matheus",
-				LocalDate.of(2004, 4, 20),
-				"F",
-				TiposSanguineo.A_NEGATIVO,
-				"Teste1");
 
-		Paciente paciente1 = new Paciente(2, "12766560920", "Matheus", LocalDate.of(2004, 04, 20)
-				, "M", TiposSanguineo.A_NEGATIVO, "Teste");
-		paciente1.setUltima_consulta(LocalDate.of(2023, 04, 20));
-
-		Ubs ubs = new Ubs(1, "UbsTeste", "12345678", 789, "Rua", "11111111111");
-		medicoRepository.insert(medico1);
 	}
 }
