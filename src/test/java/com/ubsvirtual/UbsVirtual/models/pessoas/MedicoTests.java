@@ -11,22 +11,21 @@ import java.time.LocalDate;
 public class MedicoTests {
 
     @Test
-    void testMedico() throws CpfException {
+    public void testMedico() throws CpfException {
         Medico medico = new Medico(
-                1,
-                "sdf",
+                2,
+                "1234567",
                 Especializacao.ANESTESIOLOGIA,
                 "12766560920",
                 "Matheus",
-                LocalDate.of(2004, 04, 20),
+                LocalDate.of(2004, 4, 20),
                 "F",
                 TiposSanguineo.A_NEGATIVO,
                 "Teste1"
         );
 
         Assertions.assertEquals("sdf", medico.getCrm());
-        Assertions.assertEquals(20, medico.getEspecializacao().getId_especializacao());
-        Assertions.assertEquals("Anestesiologista", medico.getEspecializacao().getNome_especializacao());
+        Assertions.assertEquals(Especializacao.ANESTESIOLOGIA, medico.getEspecializacao());
     }
 
 }
